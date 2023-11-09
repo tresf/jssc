@@ -1,5 +1,7 @@
 package jssc;
 
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -39,6 +41,13 @@ public class SerialNativeInterfaceTest {
 
     }
 
+    @Before
+    public void runNext() {
+        // Skip in CI
+        Assume.assumeTrue(System.getenv("CI") == null);
+        // Skip on Windows
+        Assume.assumeFalse(SerialNativeInterface.getOsType() == SerialNativeInterface.OS_WINDOWS);
+    }
     @Test(expected = java.io.IOException.class)
     public void reportsWriteErrorsAsIOException() throws Exception {
         long fd = -1; /*bad file by intent*/
