@@ -88,4 +88,9 @@ public class SerialNativeInterfaceTest {
         }
     }
 
+    @Test(expected = java.lang.NullPointerException.class)
+    public void throwsNpeIfPassedBufferIsNull() throws Exception {
+        new SerialNativeInterface().writeBytes(1, null);
+    }
+
 }
